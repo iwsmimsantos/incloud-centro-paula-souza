@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #f8f4ea;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .fas, .far, .fab {
+    font-family: "Font Awesome 5 Free";
+  }
+  
+  /* Container */
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f4ea;
+  }
+  
+  /* Título */
+  .page-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 14%;
+    margin-right: 14%;
+  }
+  
+  .page-title {
+    font-size: 28px;
+    color: #222;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 5px;
+  }
+  
+  .page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #b50000;
+  }
+  
+  /* Tabela */
+  .table-container {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 25px;
+    max-width: 72%; /* Add max-width */
+    margin-left: auto; /* Center the table */
+    margin-right: auto; /* Center the table */
+  }
+  
+  .students-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  
+  .students-table th {
+    background-color: #B20000;
+    color: white;
+    text-align: left;
+    padding: 12px 8px; /* Reduzido de 15px para 8px */
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .students-table th:hover {
+    background-color: #880303;
+  }
+  
+  .students-table th button.sortable {
+    all: unset;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: inherit;
+    font-size: inherit;
+    color: white;
+    width: 100%;
+  }
+  
+  .students-table th button.sortable:focus-visible {
+    outline: 2px dashed #ffffff;
+    outline-offset: 3px;
+    background-color: #b71c1c;
+  }
+  
+  .students-table th i {
+    font-size: 14px;
+    margin-left: 6px;
+    color: white;
+  }
+  
+  .students-table td {
+    padding: 12px 8px; /* Reduzido de 15px para 8px */
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .students-table tbody tr {
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .students-table tbody tr:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+  
+  .student-row {
+    cursor: pointer;
+  }
+  
+  .student-row:focus-visible {
+    outline: 2px dashed #b50000;
+    outline-offset: 3px;
+    background-color: #fce4ec;
+  }
+  
+  /* Status */
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+  
+  .status-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .em-andamento .status-dot {
+    background-color: #ffbf00;
+  }
+  
+  .pendente .status-dot {
+    background-color: #ff0000;
+  }
+  
+  .concluido .status-dot {
+    background-color: #00aa00;
+  }
+  
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+  }
+  
+  .empty-state i {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .table-container {
+      overflow-x: scroll;
+    }
+  
+    .page-title {
+      font-size: 24px;
+    }
+  
+    .students-table th,
+    .students-table td {
+      padding: 10px;
+    }
+  }
+  
+  /* Search Component */
+  app-search {
+    display: block;
+    max-width: 72%; /* Adjust this value to your preference */
+    margin-bottom: 20px;
+    /* If you want it aligned with the table */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* For responsive behavior */
+  @media (max-width: 768px) {
+    app-search {
+      max-width: 100%;
+    }
+  }

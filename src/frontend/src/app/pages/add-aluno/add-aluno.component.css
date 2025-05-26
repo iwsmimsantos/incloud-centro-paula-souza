@@ -1,0 +1,213 @@
+/* Base font styling */
+* {
+  font-family: 'Roboto', sans-serif; /* Adiciona a fonte Roboto */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* Notification styles */
+.notification {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification.error {
+  background-color: #f44336;
+}
+
+.notification.success {
+  background-color: #4CAF50;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Card styles */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.card-header h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.card-header p {
+  margin: 0;
+  color: #666;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+/* Form styles */
+.form-section {
+  margin: 20px 0;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+input, select, textarea {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #B20000;
+  box-shadow: 0 0 0 2px rgba(181, 63, 63, 0.2);
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+select {
+  height: 38px;
+}
+
+select[multiple] {
+  height: auto;
+  min-height: 100px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Checkbox styles */
+.checkboxes {
+  display: flex;
+  gap: 24px;
+  margin: 10px 0;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 24px 0;
+}
+
+/* Button styles */
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-primary {
+  background-color: #B20000;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #640101;
+}
+
+.btn-primary:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+h3 {
+  color: #B20000;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 599px) {
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-group {
+    flex: 1 1 100%;
+  }
+  
+  .checkboxes {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

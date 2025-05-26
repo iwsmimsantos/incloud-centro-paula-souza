@@ -1,0 +1,12 @@
+# Ignorar pastas
+.github/
+.husky/
+documentos/
+
+# Ignorar arquivos
+README.md
+package.json
+package-lock.json
+eslint.config.mjs
+commitlint.config.js
+.prettierrc

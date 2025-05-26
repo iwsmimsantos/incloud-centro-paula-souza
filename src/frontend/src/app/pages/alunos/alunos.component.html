@@ -1,0 +1,186 @@
+<div class="main-container" role="main">
+  <div class="content">
+    <div class="page-title-container">
+      <h1 class="page-title" id="titulo-aluno">{{ aluno?.nome }}</h1>
+      <a href="/" class="card card-font" aria-label="Voltar para a página anterior">
+        <app-back-button title="Voltar"></app-back-button>
+      </a>
+    </div>
+
+    <div *ngIf="loading" aria-live="polite" class="alert alert-info">Carregando...</div>
+    <div *ngIf="error" aria-live="assertive" class="alert alert-danger">{{ error }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" *ngIf="aluno && !loading && !error" aria-labelledby="titulo-aluno">
+      <div class="form-container">
+        <div class="form-wrapper">
+          <!-- Campos readonly -->
+          <div class="form-group">
+            <label for="nome-aluno">Nome do aluno</label>
+            <input id="nome-aluno" type="text" [value]="aluno.nome" readonly class="readonly-field">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="data-nascimento">Data de Nascimento</label>
+              <input id="data-nascimento" type="text" [value]="aluno.data_nascimento" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="unidade">Unidade</label>
+              <input id="unidade" type="text" [value]="aluno.unidade" readonly class="readonly-field">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="curso">Curso</label>
+            <input id="curso" type="text" [value]="aluno.curso" readonly class="readonly-field">
+          </div>
+
+          <div class="form-group">
+            <label for="tipo-curso">Tipo do Curso</label>
+            <input id="tipo-curso" type="text" [value]="aluno.tipo_do_curso" readonly class="readonly-field">
+          </div>
+
+          <div class="form-group">
+            <label for="turno">Turno</label>
+            <input id="turno" type="text" [value]="aluno.turno" readonly class="readonly-field">
+          </div>
+
+          <!-- Divisor para informações editáveis -->
+          <div class="section-divider">
+            <div class="section-title">Informações Editáveis</div>
+          </div>
+
+          <!-- Tipo de Necessidade Especial -->
+          <div class="form-group" *ngIf="isInclusaoUser">
+            <label for="necessidade">Tipo de Necessidade Especial <span class="required">*</span></label>
+            <textarea
+              id="necessidade"
+              formControlName="necessidade"
+              class="editable-field"
+              [ngClass]="{
+                'is-invalid': form.get('necessidade')?.invalid && form.get('necessidade')?.touched
+              }"
+            ></textarea>
+            <div *ngIf="form.get('necessidade')?.invalid && form.get('necessidade')?.touched" class="text-danger">
+              Este campo é obrigatório.
+            </div>
+          </div>
+
+          <!-- Necessita de Tecnologia Assistiva -->
+          <div class="form-group">
+            <label for="tec-assistiva">Necessita de tecnologia assistiva? <span class="required">*</span></label>
+            <div class="select-wrapper">
+              <select id="tec-assistiva" formControlName="tecnologiaAssistiva" class="editable-field">
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="sim">Sim</option>
+                <option value="não">Não</option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="form.get('tecnologiaAssistiva')?.invalid && form.get('tecnologiaAssistiva')?.touched" class="text-danger">
+              Este campo é obrigatório.
+            </div>
+          </div>
+
+          <!-- Adicionar Tecnologia -->
+          <div *ngIf="form.get('tecnologiaAssistiva')?.value === 'sim'" class="form-group">
+            <label for="novaTecnologia">Adicionar Tecnologia</label>
+            <div class="select-wrapper">
+              <select id="novaTecnologia" formControlName="novaTecnologia" class="editable-field" (change)="onNovaTecnologiaChange($event)">
+                <option [ngValue]="null" disabled selected>Selecione uma tecnologia</option>
+                <option *ngFor="let tec of tecnologiasAssistivas" [ngValue]="tec.id_tecnologia">
+                  {{ tec.nome }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <button type="button" class="save-button add-tec-button" (click)="adicionarTecnologia()" [disabled]="!isNovaTecnologiaValidValue" title="Adicionar tecnologia assistiva">
+              Adicionar
+            </button>
+          </div>
+
+          <!-- Lista de Tecnologias Vinculadas -->
+          <div *ngIf="form.get('tecnologiaAssistiva')?.value === 'sim'" class="form-group">
+            <label>Tecnologias Vinculadas</label>
+            <ul class="list-group">
+              <li *ngFor="let tec of tecnologiasSelecionadas" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ tec.nome }}
+                <button type="button" class="btn btn-danger btn-sm" (click)="removerTecnologia(tec.id_tecnologia)" title="Remover tecnologia">
+                  Remover
+                </button>
+              </li>
+              <li *ngIf="tecnologiasSelecionadas.length === 0" class="list-group-item">
+                Nenhuma tecnologia vinculada.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Necessita de Acompanhamento Profissional -->
+          <div class="form-group">
+            <label for="acompanhamento">Necessita de acompanhamento profissional? <span class="required">*</span></label>
+            <div class="select-wrapper">
+              <select id="acompanhamento" formControlName="acompanhamentoProfissional" class="editable-field">
+                <option value="" disabled>Selecione uma opção</option>
+                <option value="sim">Sim</option>
+                <option value="não">Não</option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <div *ngIf="form.get('acompanhamentoProfissional')?.invalid && form.get('acompanhamentoProfissional')?.touched" class="text-danger">
+              Este campo é obrigatório.
+            </div>
+          </div>
+
+          <!-- Adicionar Novo Auxiliar -->
+          <div class="form-group" *ngIf="form.get('acompanhamentoProfissional')?.value === 'sim'">
+            <label for="novoAuxiliar">Adicionar Auxiliar</label>
+            <div class="select-wrapper">
+              <select id="novoAuxiliar" formControlName="novoAuxiliar" class="editable-field">
+                <option value="" disabled>Selecione um auxiliar</option>
+                <option *ngFor="let aux of getAuxiliaresDisponiveis()" [value]="aux.id_auxiliar">
+                  {{ aux.nome }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </div>
+            <button type="button" class="save-button add-tec-button" (click)="adicionarAuxiliar()" title="Adicionar auxiliar">
+              Adicionar
+            </button>
+          </div>
+
+          <!-- Lista de Auxiliares Vinculados -->
+          <div class="form-group" *ngIf="form.get('acompanhamentoProfissional')?.value === 'sim'">
+            <label>Auxiliares Vinculados</label>
+            <ul class="list-group">
+              <li *ngFor="let aux of auxiliaresSelecionados" class="list-group-item d-flex justify-content-between align-items-center">
+                {{ aux.nome }}
+                <button type="button" class="btn btn-danger btn-sm" (click)="removerAuxiliar(aux.id_auxiliar)" title="Remover auxiliar">
+                  Remover
+                </button>
+              </li>
+              <li *ngIf="auxiliaresSelecionados.length === 0" class="list-group-item">
+                Nenhum auxiliar vinculado.
+              </li>
+            </ul>
+          </div>
+
+          <!-- Observações sobre Casos na Família -->
+          <div class="form-group">
+            <label for="obs-casos-familia">Observações sobre Casos na Família</label>
+            <textarea id="obs-casos-familia" formControlName="observacaoCasosFamilia" class="editable-field"></textarea>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="buttons-container">
+            <button type="button" class="cancel-button" (click)="cancelar()" title="Cancelar alterações">
+              Cancelar
+            </button>
+            <button type="submit" class="save-button" title="Salvar informações do aluno">
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

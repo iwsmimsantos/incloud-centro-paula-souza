@@ -1,0 +1,28 @@
+{
+  "name": "api-rest-node-typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Inteli-College/2025-1A-T13-ES05-G03.git",
+  "author": "Inclouders",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "express": "^4.21.2",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "Node",
+    "target": "ES2022",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}

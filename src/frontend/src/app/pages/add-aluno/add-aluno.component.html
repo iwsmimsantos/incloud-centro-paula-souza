@@ -1,0 +1,223 @@
+<div class="container">
+  <!-- Notification component -->
+  <div class="notification" *ngIf="notification.visible" [ngClass]="notification.type">
+    <span>{{ notification.message }}</span>
+    <button class="btn-close" (click)="notification.visible = false">×</button>
+  </div>
+  
+  <div class="card">
+    <div class="card-header">
+      <h2>Cadastro de Aluno</h2>
+      <p>Preencha os dados para cadastrar um novo aluno</p>
+    </div>
+    
+    <div class="card-content">
+      <form [formGroup]="alunoForm" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+          <h3>Informações Pessoais</h3>
+          
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="nome">Nome Completo*</label>
+              <input id="nome" type="text" formControlName="nome" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" maxlength="100">
+              <div class="error-message" *ngIf="f['nome'].touched && f['nome'].hasError('required')">
+                Nome é obrigatório
+              </div>
+              <div class="error-message" *ngIf="f['nome'].touched && f['nome'].hasError('pattern')">
+                Nome deve conter apenas letras
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="data_nascimento">Data de Nascimento</label>
+              <input id="data_nascimento" type="date" formControlName="data_nascimento">
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        
+        <div class="form-section">
+          <h3>Informações Acadêmicas</h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="unidade">Unidade</label>
+              <select id="unidade" formControlName="unidade">
+                <option value="">Selecione uma unidade</option>
+                <option *ngFor="let unidade of unidades" [value]="unidade">{{unidade}}</option>
+                <option value="outra">Outra (nova unidade)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="curso">Curso</label>
+              <select id="curso" formControlName="curso">
+                <option value="">Selecione um curso</option>
+                <option *ngFor="let curso of cursos" [value]="curso">{{curso}}</option>
+                <option value="outro">Outro (novo curso)</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="turno">Turno</label>
+              <select id="turno" formControlName="turno">
+                <option value="">Selecione um turno</option>
+                <option value="Matutino">Matutino</option>
+                <option value="Vespertino">Vespertino</option>
+                <option value="Noturno">Noturno</option>
+                <option value="Integral">Integral</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ano_matricula">Ano de Matrícula</label>
+              <input id="ano_matricula" type="text" formControlName="ano_matricula" pattern="[0-9]{4}" maxlength="4">
+              <div class="error-message" *ngIf="f['ano_matricula'].touched && f['ano_matricula'].hasError('pattern')">
+                Insira apenas 4 dígitos numéricos
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="data_da_matricula">Data da Matrícula</label>
+              <input id="data_da_matricula" type="date" formControlName="data_da_matricula">
+            </div>
+            
+            <div class="form-group">
+              <label for="data_fim_do_curso">Data Prevista de Conclusão</label>
+              <input id="data_fim_do_curso" type="date" formControlName="data_fim_do_curso">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tipo_do_curso">Tipo do Curso</label>
+              <select id="tipo_do_curso" formControlName="tipo_do_curso">
+                <option value="">Selecione o tipo de curso</option>
+                <option value="Online">Online</option>
+                <option value="Presencial">Presencial</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        
+        <div class="form-section">
+          <h3>Necessidades Específicas</h3>
+          
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="tipo_necessidade">Tipo de Necessidade</label>
+              <input id="tipo_necessidade" type="text" formControlName="tipo_necessidade" pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+">
+              <div class="error-message" *ngIf="f['tipo_necessidade'].touched && f['tipo_necessidade'].hasError('pattern')">
+                Tipo de necessidade deve conter apenas letras
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-row checkboxes">
+            <div class="checkbox-group">
+              <input id="necessita_tecnologia_assistiva" type="checkbox" formControlName="necessita_tecnologia_assistiva">
+              <label for="necessita_tecnologia_assistiva">Necessita de Tecnologia Assistiva</label>
+            </div>
+            
+            <div class="checkbox-group">
+              <input id="necessita_acompanhamento" type="checkbox" formControlName="necessita_acompanhamento">
+              <label for="necessita_acompanhamento">Necessita de Acompanhamento</label>
+            </div>
+          </div>
+          
+          <div class="form-row" *ngIf="f['necessita_acompanhamento'].value">
+           
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        
+        <div class="form-section">
+          <h3>Informações do Responsável</h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome_do_responsavel">Nome do Responsável</label>
+              <input id="nome_do_responsavel" type="text" formControlName="nome_do_responsavel" pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" maxlength="100">
+              <div class="error-message" *ngIf="f['nome_do_responsavel'].touched && f['nome_do_responsavel'].hasError('pattern')">
+                Nome do responsável deve conter apenas letras
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email_do_responsavel">Email do Responsável</label>
+              <input id="email_do_responsavel" type="email" formControlName="email_do_responsavel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+              <div class="error-message" *ngIf="f['email_do_responsavel'].touched && f['email_do_responsavel'].hasError('required')">
+                Email é obrigatório
+              </div>
+              <div class="error-message" *ngIf="f['email_do_responsavel'].touched && f['email_do_responsavel'].hasError('email')">
+                Email inválido
+              </div>
+              <div class="error-message" *ngIf="f['email_do_responsavel'].touched && f['email_do_responsavel'].hasError('pattern')">
+                Email deve conter '&#64;'
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="telefone_do_responsavel">Telefone do Responsável</label>
+              <input id="telefone_do_responsavel" type="text" formControlName="telefone_do_responsavel" pattern="[0-9]{11}" maxlength="11">
+              <div class="error-message" *ngIf="f['telefone_do_responsavel'].touched && f['telefone_do_responsavel'].hasError('pattern')">
+                Telefone deve conter 11 dígitos numéricos (com DDD)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        
+        <div class="form-section">
+          <h3>Informações Adicionais</h3>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="atendimento_unidade_anterior">Atendimento em Unidade Anterior</label>
+              <select id="atendimento_unidade_anterior" formControlName="atendimento_unidade_anterior">
+                <option value="">Selecione uma opção</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="casos_na_familia">Casos na Família</label>
+              <select id="casos_na_familia" formControlName="casos_na_familia">
+                <option value="">Selecione uma opção</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row" *ngIf="f['casos_na_familia'].value === 'Sim'">
+            <div class="form-group full-width">
+              <label for="observacao_casos_familia">Observações sobre Casos na Família</label>
+              <textarea id="observacao_casos_familia" formControlName="observacao_casos_familia" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            <span *ngIf="loading">Enviando...</span>
+            <span *ngIf="!loading">Cadastrar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

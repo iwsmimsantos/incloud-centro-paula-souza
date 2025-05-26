@@ -1,0 +1,11 @@
+.voltar-btn {
+  cursor: pointer;
+  border: none; /* Remove a borda */
+  background: none; /* Remove o fundo padrão */
+  padding: 0; /* Remove o preenchimento padrão */
+  transition: transform 0.3s ease, brightness 0.3s ease; /* Adiciona transições para transformações e brilho */
+}
+.voltar-btn:hover {
+  transform: scale(1.05); /* Aumenta o tamanho do botão ao passar o mouse */
+  filter: brightness(0.9); /* Diminui o brilho ao passar o mouse */
+}

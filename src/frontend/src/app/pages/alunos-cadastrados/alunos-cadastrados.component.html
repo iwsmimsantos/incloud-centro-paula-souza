@@ -1,0 +1,91 @@
+<div class="main-container" role="main">
+  <div class="content">
+    <div class="page-title-container">
+      <h1 class="page-title" id="titulo-alunos">Alunos Cadastrados</h1>
+      <a href="/" class="card card-font" aria-label="Voltar à página inicial">
+        <app-back-button title="Voltar"></app-back-button>
+      </a>
+    </div>
+
+    <!-- Componente de pesquisa -->
+    <app-search 
+      (searchChanged)="onSearchChanged($event)" 
+      (addClicked)="navigateToAddAluno()">
+    </app-search>
+
+    <!-- Tabela de alunos -->
+    <div class="table-container" role="region" aria-labelledby="titulo-alunos" aria-live="polite">
+      <table class="students-table" role="table" aria-label="Tabela de alunos cadastrados">
+        <thead>
+          <tr>
+            <th scope="col">
+              <button (click)="sortBy('nome')" class="sortable" [attr.aria-sort]="getAriaSort('nome')" aria-label="Ordenar por nome">
+                Nome
+                <i class="fas" [ngClass]="{
+                  'fa-sort-down': sortColumn === 'nome' && sortDirection === 'asc', 
+                  'fa-sort-up': sortColumn === 'nome' && sortDirection === 'desc', 
+                  'fa-sort': sortColumn !== 'nome'
+                }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="sortBy('tipo_necessidade')" class="sortable" [attr.aria-sort]="getAriaSort('tipo_necessidade')" aria-label="Ordenar por tipo de necessidade">
+                Tipo de Necessidade
+                <i class="fas" [ngClass]="{
+                  'fa-sort-down': sortColumn === 'tipo_necessidade' && sortDirection === 'asc', 
+                  'fa-sort-up': sortColumn === 'tipo_necessidade' && sortDirection === 'desc', 
+                  'fa-sort': sortColumn !== 'tipo_necessidade'
+                }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="sortBy('curso')" class="sortable" [attr.aria-sort]="getAriaSort('curso')" aria-label="Ordenar por curso">
+                Curso
+                <i class="fas" [ngClass]="{
+                  'fa-sort-down': sortColumn === 'curso' && sortDirection === 'asc', 
+                  'fa-sort-up': sortColumn === 'curso' && sortDirection === 'desc', 
+                  'fa-sort': sortColumn !== 'curso'
+                }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="sortBy('unidade')" class="sortable" [attr.aria-sort]="getAriaSort('unidade')" aria-label="Ordenar por unidade">
+                Unidade
+                <i class="fas" [ngClass]="{
+                  'fa-sort-down': sortColumn === 'unidade' && sortDirection === 'asc', 
+                  'fa-sort-up': sortColumn === 'unidade' && sortDirection === 'desc', 
+                  'fa-sort': sortColumn !== 'unidade'
+                }" aria-hidden="true"></i>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let aluno of displayedAlunos" class="student-row" (click)="navigateToStudentDetails(aluno.id)" tabindex="0">
+            <td class="student-name">{{ aluno.nome }}</td>
+            <td>{{ aluno.tipo_necessidade }}</td>
+            <td>{{ aluno.curso }}</td>
+            <td>{{ aluno.unidade }}</td>
+          </tr>
+          <tr *ngIf="displayedAlunos.length === 0">
+            <td colspan="4" class="no-results">
+              <div class="empty-state" role="alert">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <p>Nenhum aluno encontrado.</p>
+                <p *ngIf="searchTerm">Tente outro termo de busca.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Componente de paginação -->
+    <app-next-page
+      [totalItems]="filteredAlunos.length"
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      (pageChanged)="onPageChanged($event)">
+    </app-next-page>
+  </div>
+</div>

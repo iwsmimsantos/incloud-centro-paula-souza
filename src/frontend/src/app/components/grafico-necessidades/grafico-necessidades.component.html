@@ -1,0 +1,8 @@
+<div style="width: 80%; margin: auto; height: 300px" *ngIf="barChartData">
+  <canvas
+    baseChart
+    [data]="barChartData"
+    [options]="barChartOptions"
+    chartType="bar"
+  ></canvas>
+</div>

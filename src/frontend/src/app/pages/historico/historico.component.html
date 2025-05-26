@@ -1,0 +1,156 @@
+<div class="main-container" role="main">
+  <div class="content">
+    <div class="page-title-container">
+      <h1 class="page-title" id="titulo-historico">Histórico de Atendimentos</h1>
+      <a href="/" class="card card-font" aria-label="Voltar à página inicial">
+        <app-back-button title="Voltar"></app-back-button>
+      </a>
+    </div>
+
+    <app-search 
+    (searchChanged)="onSearch($event)" 
+    (addClicked)="aoClicarAdicionar()">
+  </app-search>
+
+    <div class="table-container" role="region" aria-labelledby="titulo-historico" aria-live="polite">
+      <table role="table" aria-label="Tabela com histórico de atendimentos">
+        <thead>
+          <tr>
+            <th scope="col">
+              <button (click)="toggleSort('atendimento')" class="sortable" [attr.aria-sort]="getAriaSort('atendimento')" aria-label="Ordenar por atendimento">
+                Atendimento
+                <i class="fas"
+                   [ngClass]="{ 
+                     'fa-sort-down': sortField === 'atendimento' && sortDirection === 'desc',
+                     'fa-sort-up': sortField === 'atendimento' && sortDirection === 'asc',
+                     'fa-sort': sortField !== 'atendimento'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+           
+            <th scope="col">
+              <button (click)="toggleSort('nomeAluno')" class="sortable" [attr.aria-sort]="getAriaSort('nomeAluno')" aria-label="Ordenar por nome do aluno">
+                Nome do Aluno
+                <i class="fas"
+                   [ngClass]="{ 
+                     'fa-sort-down': sortField === 'nomeAluno' && sortDirection === 'desc',
+                     'fa-sort-up': sortField === 'nomeAluno' && sortDirection === 'asc',
+                     'fa-sort': sortField !== 'nomeAluno'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="toggleSort('profissional')" class="sortable" [attr.aria-sort]="getAriaSort('profissional')" aria-label="Ordenar por profissional designado">
+                Funcionário Designado
+                <i class="fas"
+                   [ngClass]="{ 
+                     'fa-sort-down': sortField === 'profissional' && sortDirection === 'desc',
+                     'fa-sort-up': sortField === 'profissional' && sortDirection === 'asc',
+                     'fa-sort': sortField !== 'profissional'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let atendimento of atendimentos" tabindex="0">
+            <td>{{ atendimento.atendimento }}</td>
+            <td>{{ atendimento.nomeAluno }}</td>
+            <td>{{ atendimento.profissional }}</td>
+          </tr>
+          <tr *ngIf="atendimentos.length === 0">
+            <td colspan="3" style="text-align: center; padding: 20px;">
+              <div role="alert">Nenhum registro encontrado</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-next-page 
+      [totalItems]="totalItems" 
+      [currentPage]="currentPage" 
+      [pageSize]="pageSize" 
+      (pageChanged)="onPageChanged($event)">
+    </app-next-page>
+  </div>
+</div>
+
+<!-- Modal de Registro de Atendimento -->
+<div class="modal-overlay" [class.active]="showModal" (click)="onOverlayClick($event)">
+  <div class="modal-dialog" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h2 id="modalTitle" style="color: #B20000;">Registro de Atendimentos</h2>
+      <button class="close-button" (click)="closeModal()" aria-label="Fechar">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <form [formGroup]="atendimentoForm" (ngSubmit)="submitAtendimento()">
+        <div class="form-group">
+          <label for="idAluno">Nome do Aluno</label>
+          <select formControlName="idAluno" class="form-control">
+            <option value="">Selecione um aluno</option>
+            <option *ngFor="let aluno of alunos" [value]="aluno.id_aluno">
+              {{ aluno.nome }}
+            </option>
+          </select>
+          <div class="validation-error" *ngIf="atendimentoForm.get('idAluno')?.invalid && atendimentoForm.get('idAluno')?.touched">
+            Selecione um aluno
+          </div>
+        </div>
+        
+        <!-- Para o dropdown de profissionais -->
+        <div class="form-group">
+          <label for="idFuncionario">Funcionário Designado</label>
+          <select 
+          id="idFuncionario" 
+          formControlName="idFuncionario"
+          required
+          aria-required="true"
+          class="form-control">
+          <option value="">Selecione um funcionário</option>
+          <option *ngFor="let prof of profissionais" [value]="prof.id_funcionario">
+            {{ prof.nome }}
+          </option>
+        </select>
+          <div class="validation-error" *ngIf="atendimentoForm.get('idFuncionario')?.invalid && atendimentoForm.get('idFuncionario')?.touched">
+            Selecione um funcionário
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="dataInicio">Data de Início</label>
+          <input 
+            type="date" 
+            id="dataInicio" 
+            formControlName="dataInicio"
+            required
+            aria-required="true">
+          <div class="validation-error" *ngIf="atendimentoForm.get('dataInicio')?.invalid && atendimentoForm.get('dataInicio')?.touched">
+            Data de início é obrigatória
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="dataFim">Data de Fim</label>
+          <input 
+            type="date" 
+            id="dataFim" 
+            formControlName="dataFim"
+            required
+            aria-required="true">
+          <div class="validation-error" *ngIf="atendimentoForm.get('dataFim')?.invalid && atendimentoForm.get('dataFim')?.touched">
+            Data de fim é obrigatória
+          </div>
+        </div>
+        
+        <div class="button-group">
+          <button type="button" class="cancel-button" (click)="closeModal()">Cancelar</button>
+          <button type="submit" class="submit-button" [disabled]="atendimentoForm.invalid">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

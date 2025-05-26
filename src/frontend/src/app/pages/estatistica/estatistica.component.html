@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Estatísticas de Atendimento</title>
+  </head>
+  <body>
+    <div class="main-container" role="main">
+      <div class="content">
+        <div class="page-title-container">
+          <h1 class="page-title" id="titulo-estatisticas">
+            Estatísticas de Atendimento
+          </h1>
+          <a
+            href="/"
+            class="card card-font"
+            aria-label="Voltar à página inicial"
+          >
+            <app-back-button title="Voltar"></app-back-button>
+          </a>
+        </div>
+
+        <div
+          class="filters-container"
+          aria-label="Filtros de estatísticas"
+          role="group"
+        >
+          <div
+            class="filter"
+            tabindex="0"
+            role="button"
+            aria-label="Filtrar por período"
+          >
+            <i class="fas fa-filter" aria-hidden="true"></i> Período
+          </div>
+          <div
+            class="filter"
+            tabindex="0"
+            role="button"
+            aria-label="Filtrar por unidade"
+          >
+            <i class="fas fa-filter" aria-hidden="true"></i> Unidade
+          </div>
+          <div
+            class="filter"
+            tabindex="0"
+            role="button"
+            aria-label="Filtrar por tipo de curso"
+          >
+            <i class="fas fa-filter" aria-hidden="true"></i> Tipo de curso
+          </div>
+          <div
+            class="filter"
+            tabindex="0"
+            role="button"
+            aria-label="Filtrar por necessidade especial"
+          >
+            <i class="fas fa-filter" aria-hidden="true"></i> Necessidade
+            Especial
+          </div>
+        </div>
+
+        <div class="metrics-container" aria-live="polite">
+          <div class="metric-card" role="region">
+            <div class="metric-number">{{ totalAtendimentos }}</div>
+            <div class="metric-label">Alunos atendidos</div>
+          </div>
+          <div
+            class="metric-card"
+            role="region"
+            aria-label="19 atendimentos no período"
+          >
+            <div class="metric-number">{{ totalAtendimentosGeral }}</div>
+            <div class="metric-label">Atendimentos no período</div>
+          </div>
+          <div
+            class="metric-card"
+            role="region"
+            aria-label="5 alunos com uso de tecnologia assistiva"
+          >
+            <div class="metric-number">{{ totalTecnologiasAssistivas }}</div>
+            <div class="metric-label">Uso de tecnologia assistiva</div>
+          </div>
+          <div
+            class="metric-card"
+            role="region"
+            aria-label="14 acompanhamentos profissionais"
+          >
+            <div class="metric-number">{{ totalAcompanhamentos }}</div>
+            <div class="metric-label">Acompanhamento profissional</div>
+          </div>
+        </div>
+
+        <div class="charts-grid" aria-labelledby="titulo-estatisticas">
+          <div
+            class="chart-container"
+            role="region"
+            aria-label="Gráfico de necessidades especiais"
+          >
+            <h2 class="chart-title">Necessidades especiais</h2>
+            <app-grafico-necessidades></app-grafico-necessidades>
+          </div>
+          <div
+            class="chart-container"
+            role="region"
+            aria-label="Gráfico de evolução dos atendimentos"
+          >
+            <h2 class="chart-title">Evolução de atendimentos</h2>
+            <app-grafico-evolucao></app-grafico-evolucao>
+          </div>
+          <div
+            class="chart-container"
+            role="region"
+            aria-label="Gráfico de origem dos alunos"
+          >
+            <h2 class="chart-title">Origem dos alunos</h2>
+            <app-grafico-origem-alunos></app-grafico-origem-alunos>
+          </div>
+          <div class="chart-container" role="region">
+            <h2 class="chart-title">
+              Distribuição de Tecnologias Assistivas por Tipo
+            </h2>
+            <div><app-tecnologia-grafico></app-tecnologia-grafico></div>
+          </div>
+        </div>
+
+        <div class="export-container">
+          <button
+            class="export-button"
+            aria-label="Exportar relatório de estatísticas"
+            (click)="exportarRelatorio()"
+          >
+            <i class="fas fa-file-export" aria-hidden="true"></i> Exportar
+            relatório
+          </button>
+        </div>
+      </div>
+      <div class="estatisticas-container"></div>
+    </div>
+  </body>
+</html>

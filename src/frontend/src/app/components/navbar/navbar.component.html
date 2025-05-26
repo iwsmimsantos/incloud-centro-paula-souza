@@ -1,0 +1,28 @@
+<!-- navbar.component.html -->
+<div class="navbar">
+  <div class="logo-container">
+    <img class="logo" src="assets/images/incloud.svg" alt="InCloud Logo">
+    <span class="brand-name" style="font-family: 'Arial', sans-serif;">InCloud</span>
+  </div>
+  
+  <ul class="nav-links">
+    <li><a href="/historico" [ngClass]="{'active': isActive('historico')}"><i class="fas fa-history" aria-hidden="true"></i> </a></li>
+    <li><a href="/profissionais" [ngClass]="{'active': isActive('profissionais')}"><i class="fa-solid fa-user-tie" aria-hidden="true"></i> </a></li>
+    <li><a href="/estatistica" [ngClass]="{'active': isActive('estatistica')}"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> </a></li>
+    <li><a href="/alunoscadastrados" [ngClass]="{'active': isActive('alunoscadastrados')}"><i class="fas fa-users" aria-hidden="true"></i> </a></li>
+  </ul>
+  
+  <div class="user-container">
+    <div class="user-icon" (click)="toggleUserMenu()">
+      <svg class="user-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path fill="white" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+    </div>
+    <!-- Menu dropdown do usuário -->
+    <div class="user-menu" *ngIf="isUserMenuOpen">
+      <ul>
+        <li (click)="logout()">Logout</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Adiciona a fonte Roboto */
+
+
+:host {
+  display: block;
+  height: 1000vh; /* Ocupa 100% da altura da viewport */
+  background-color: #FCF7ED;
+  font-family: 'Roboto', sans-serif; /* Adiciona a fonte Roboto */
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 90vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ajustado para ocupar 100% da altura do host */
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto; /* Centraliza horizontalmente */
+  box-sizing: border-box;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  width: 100%;
+  max-width: 900px; /* Limita a largura máxima */
+  margin: 0 auto;
+}
+
+.card {
+  background-color: #B20000;
+  width: 400px;
+  height: 200px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box; /* Para garantir que padding não afete o tamanho */
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1; /* Garante que o card em hover fique acima dos outros */
+}
+
+.card-font {
+  font-family: 'Arial', sans-serif;
+  font-size: 25px;
+  color: #FCF7ED;
+  font-weight: 500;
+}
+
+.card-font i {
+  font-size: 56px;
+  margin-bottom: 1rem;
+}
+
+/* Media queries para tornar responsivo em diferentes tamanhos de tela */
+@media (max-width: 992px) {
+  .container {
+    height: auto;
+    justify-content: flex-start;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin-top: 30px;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 180px; /* Ligeiramente menor em mobile */
+  }
+  
+  .card-font {
+    font-size: 22px; /* Texto um pouco menor em mobile */
+  }
+  
+  .card-font i {
+    font-size: 48px;
+  }
+}
+
+/* Para telas muito pequenas */
+@media (max-width: 576px) {
+  .container {
+    width: 90%;
+    padding-top: 10px;
+  }
+  
+  .card {
+    height: 160px;
+    padding-left: 0.75rem;
+  }
+  
+  .card-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media print {
+  .container {
+    transform: none !important;
+  }
+  
+  .card {
+    page-break-inside: avoid;
+  }
+}

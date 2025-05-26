@@ -1,0 +1,22 @@
+<div class="pagination" *ngIf="totalPages > 0">
+    <a href="javascript:void(0)" class="pagination-button" (click)="previousPage()">
+      <i class="fas fa-chevron-left"></i> Anterior
+    </a>
+    
+    <div class="page-numbers">
+      <ng-container *ngFor="let page of pages">
+        <span class="ellipsis" *ngIf="isEllipsis(page)">...</span>
+        <a href="javascript:void(0)" 
+           class="page-number" 
+           [class.active]="page === currentPage" 
+           *ngIf="!isEllipsis(page)"
+           (click)="changePage(page)">
+          {{ page }}
+        </a>
+      </ng-container>
+    </div>
+    
+    <a href="javascript:void(0)" class="pagination-button" (click)="nextPage()">
+      Próximo <i class="fas fa-chevron-right"></i>
+    </a>
+  </div>

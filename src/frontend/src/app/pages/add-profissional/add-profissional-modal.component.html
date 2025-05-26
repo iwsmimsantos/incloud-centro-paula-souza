@@ -1,0 +1,57 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal-container" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <h2 id="modal-title">Adicionar Profissional</h2>
+      <button class="close-button" (click)="fechar()" aria-label="Fechar">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="error-message" *ngIf="formError">
+        {{ formError }}
+      </div>
+      
+      <form #form="ngForm">
+        <div class="form-group">
+          <label for="nome">Nome *</label>
+          <input type="text" id="nome" name="nome" [(ngModel)]="profissional.nome" required>
+        </div>
+
+        <div class="form-group">
+          <label for="especializacoes">Especialização</label>
+          <input type="text" id="especializacoes" name="especializacoes" [(ngModel)]="profissional.especializacoes">
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" [(ngModel)]="profissional.telefone" 
+                 (input)="formatarTelefone($event)" 
+                 placeholder="(DDD) 9XXXX-XXXX">
+          <div class="error-message" *ngIf="telefoneInvalido">
+            Formato inválido. Use (DDD) 9XXXX-XXXX
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" [(ngModel)]="profissional.email" 
+                 (blur)="validarEmail()">
+          <div class="error-message" *ngIf="emailInvalido">
+            Email inválido. Deve conter &#64;
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="empresa">Empresa</label>
+          <input type="text" id="empresa" name="empresa" [(ngModel)]="profissional.empresa">
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="cancel-button" (click)="fechar()">Cancelar</button>
+      <button class="save-button" (click)="salvar()">Salvar</button>
+    </div>
+  </div>
+</div>

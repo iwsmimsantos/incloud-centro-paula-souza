@@ -1,0 +1,106 @@
+<div class="main-container" role="main">
+  <div class="content">
+    <div class="page-title-container">
+      <h1 class="page-title" id="titulo-profissionais">Visualização Auxiliares</h1>
+      <a href="/" class="card card-font" aria-label="Voltar à página inicial">
+        <app-back-button title="Voltar"></app-back-button>
+      </a>
+    </div>
+
+    <!-- Componente de pesquisa -->
+    <app-search 
+    (searchChanged)="aoMudarBusca($event)" 
+    (addClicked)="aoClicarAdicionar()">
+  </app-search>
+
+    <!-- Tabela de profissionais -->
+    <div class="table-container" role="region" aria-labelledby="titulo-profissionais" aria-live="polite">
+      <table class="professionals-table" role="table" aria-label="Tabela de profissionais">
+        <thead>
+          <tr>
+            <th scope="col">
+              <button (click)="ordenarPor('nome')" class="sortable" [attr.aria-sort]="getAriaSort('nome')" aria-label="Ordenar por nome">
+                Auxiliar
+                <i class="fas"
+                   [ngClass]="{
+                     'fa-sort-down': colunaOrdenacao === 'nome' && direcaoOrdenacao === 'asc',
+                     'fa-sort-up': colunaOrdenacao === 'nome' && direcaoOrdenacao === 'desc',
+                     'fa-sort': colunaOrdenacao !== 'nome'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="ordenarPor('especialidade')" class="sortable" [attr.aria-sort]="getAriaSort('especialidade')" aria-label="Ordenar por especialidade">
+                Especialidade
+                <i class="fas"
+                   [ngClass]="{
+                     'fa-sort-down': colunaOrdenacao === 'especialidade' && direcaoOrdenacao === 'asc',
+                     'fa-sort-up': colunaOrdenacao === 'especialidade' && direcaoOrdenacao === 'desc',
+                     'fa-sort': colunaOrdenacao !== 'especialidade'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="ordenarPor('telefone')" class="sortable" [attr.aria-sort]="getAriaSort('telefone')" aria-label="Ordenar por telefone">
+                Telefone
+                <i class="fas"
+                   [ngClass]="{
+                     'fa-sort-down': colunaOrdenacao === 'telefone' && direcaoOrdenacao === 'asc',
+                     'fa-sort-up': colunaOrdenacao === 'telefone' && direcaoOrdenacao === 'desc',
+                     'fa-sort': colunaOrdenacao !== 'telefone'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+            <th scope="col">
+              <button (click)="ordenarPor('email')" class="sortable" [attr.aria-sort]="getAriaSort('email')" aria-label="Ordenar por email">
+                Email
+                <i class="fas"
+                   [ngClass]="{
+                     'fa-sort-down': colunaOrdenacao === 'email' && direcaoOrdenacao === 'asc',
+                     'fa-sort-up': colunaOrdenacao === 'email' && direcaoOrdenacao === 'desc',
+                     'fa-sort': colunaOrdenacao !== 'email'
+                   }" aria-hidden="true"></i>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let profissional of profissionaisExibidos"
+              class="professional-row"
+              tabindex="0"
+              role="row"
+              [attr.aria-label]="'Ver detalhes de ' + profissional.nome">
+            <td>{{ profissional.nome }}</td>
+            <td>{{ profissional.especialidade }}</td>
+            <td>{{ profissional.telefone | telefoneFormat }}</td>
+            <td>{{ profissional.email }}</td>
+          </tr>
+
+          <tr *ngIf="profissionaisExibidos.length === 0">
+            <td colspan="4" class="no-results">
+              <div class="empty-state" role="alert">
+                <i class="fas fa-search"></i>
+                <p>Nenhum profissional encontrado.</p>
+                <p *ngIf="termoBusca">Tente outro termo de busca.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Componente de paginação -->
+    <app-next-page
+      [totalItems]="profissionaisFiltrados.length"
+      [currentPage]="paginaAtual"
+      [pageSize]="itensPorPagina"
+      (pageChanged)="aoMudarPagina($event)">
+    </app-next-page>
+  </div>
+</div>
+
+<!-- Modal para adicionar profissional -->
+<app-add-profissional-modal #modalAdd
+  (close)="onModalClosed()"
+  (save)="onProfissionalSaved($event)">
+</app-add-profissional-modal>
