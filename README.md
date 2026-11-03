@@ -1,3 +1,15 @@
+## Minha participação (Iasmim Santos)
+
+Projeto em grupo de 10 semanas no Inteli, com o Centro Paula Souza (fev/2025 a abr/2025). Esta é a cópia pública que o Inteli publicou. Meus 74 commits estão no repositório original do grupo, que é privado.
+
+- Liguei o painel ao banco de dados, trocando os dados de exemplo pelos dados reais de atendimentos e de tecnologia assistiva.
+- Criei os gráficos de origem dos alunos e de tecnologia assistiva e a exportação de relatórios.
+- Ajustei os requisitos com base no feedback das sprints.
+
+**Tecnologias:** Angular, TypeScript, Node.js e AWS
+
+---
+
 <div align="center">
   <table>
     <tr>
